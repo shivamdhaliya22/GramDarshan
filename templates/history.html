@@ -4,17 +4,19 @@
 
 {% block content %}
 
+<!-- HERO -->
+
 <section class="page-hero">
 
     <div class="container">
 
         <p class="eyebrow">HISTORY & HERITAGE</p>
 
-        <h1>Our Village Story</h1>
+        <h1>Gagol (Gangol)</h1>
 
         <p>
-            Explore the history, heritage and cultural identity
-            of your village.
+            A village where ancient traditions, sacred heritage
+            and the memory of 1857 continue to shape its identity.
         </p>
 
     </div>
@@ -22,155 +24,441 @@
 </section>
 
 
+<!-- INTRODUCTION -->
+
 <section class="section">
 
     <div class="container">
 
-        <div class="section-heading">
+        <div class="history-intro">
 
-            <p class="eyebrow">HISTORY</p>
+            <p class="eyebrow">A VILLAGE WITH A STORY</p>
 
-            <h2>Village History</h2>
+            <h2>More Than a Place on the Map</h2>
 
             <p>
-                Important historical information and records
-                related to the village.
+                Gagol, historically known as Gangol, is a village in
+                Meerut district with a rich cultural and historical identity.
+                Its story brings together local traditions, sacred places
+                and memories connected with the struggle of 1857.
+            </p>
+
+            <p>
+                Today, these stories continue to form an important part
+                of the village's heritage and community identity.
             </p>
 
         </div>
-
-
-        {% if history_records %}
-
-        <div class="history-list">
-
-            {% for record in history_records %}
-
-            <div class="content-card">
-
-                <h3>{{ record["title"] }}</h3>
-
-                <p>
-                    {{ record["description"] }}
-                </p>
-
-                {% if record["source"] %}
-
-                <span class="source-text">
-                    Source: {{ record["source"] }}
-                </span>
-
-                {% endif %}
-
-            </div>
-
-            {% endfor %}
-
-        </div>
-
-        {% else %}
-
-        <div class="empty-state">
-
-            <h3>History information will be added soon.</h3>
-
-            <p>
-                Verified historical information about the village
-                will be displayed here.
-            </p>
-
-        </div>
-
-        {% endif %}
 
     </div>
 
 </section>
 
 
-<section class="section heritage-section">
+<!-- ANCIENT TRADITION -->
+
+<section class="section section-alt">
 
     <div class="container">
 
         <div class="section-heading">
 
-            <p class="eyebrow">HERITAGE</p>
+            <p class="eyebrow">ANCIENT TRADITION</p>
 
-            <h2>Heritage Places</h2>
+            <h2>The Story Behind Gangol</h2>
+
+        </div>
+
+
+        <div class="history-card">
+
+            <h3>A Local Tradition of the Ramayana Era</h3>
 
             <p>
-                Discover important places and cultural landmarks
-                connected with the village.
+                According to local tradition, the area around present-day
+                Gagol is associated with the ashram of Maharshi Vishwamitra.
+                Stories connected with the Ramayana describe Lord Rama and
+                Lakshmana arriving here with the sage.
+            </p>
+
+            <p>
+                Local folklore further tells that Rama created a source of
+                water by shooting an arrow into the ground during a period
+                of water scarcity. The sacred water is traditionally linked
+                with the name "Ganga-Jal", from which the name Gangol is
+                believed locally to have developed.
+            </p>
+
+            <div class="heritage-note">
+
+                <strong>Tradition, not verified historical fact</strong>
+
+                <p>
+                    These accounts are part of local religious tradition
+                    and folklore and are presented here as cultural heritage.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- GAGOL TEERTH -->
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="heritage-feature">
+
+            <div>
+
+                <p class="eyebrow">SACRED HERITAGE</p>
+
+                <h2>Gagol Teerth</h2>
+
+                <p>
+                    Gagol Teerth is closely associated with the village's
+                    religious and cultural identity. The site preserves
+                    traditions that connect the present-day village with
+                    its ancient stories.
+                </p>
+
+                <p>
+                    For the local community, the teerth represents more
+                    than a religious place — it is also a part of the
+                    cultural memory of Gagol.
+                </p>
+
+            </div>
+
+            <div class="heritage-highlight">
+
+                <span>HERITAGE</span>
+
+                <h3>Gagol Teerth</h3>
+
+                <p>
+                    A sacred site associated with the village's
+                    ancient traditions.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- 1857 -->
+
+<section class="section section-alt">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">1857</p>
+
+            <h2>Gagol and the Uprising</h2>
+
+            <p>
+                The village also carries a powerful memory from India's
+                struggle against British rule.
             </p>
 
         </div>
 
 
-        {% if heritage_places %}
+        <div class="timeline">
 
-        <div class="heritage-grid">
+            <div class="timeline-item">
 
-            {% for place in heritage_places %}
+                <div class="timeline-marker">
+                    1857
+                </div>
 
-            <div class="heritage-card">
+                <div class="timeline-content">
 
-                {% if place["photo"] %}
-
-                <img
-                    src="{{ url_for('static', filename=place['photo']) }}"
-                    alt="{{ place['title'] }}"
-                >
-
-                {% endif %}
-
-
-                <div class="heritage-card-content">
-
-                    <h3>{{ place["title"] }}</h3>
+                    <h3>Resistance</h3>
 
                     <p>
-                        {{ place["description"] }}
+                        During the uprising of 1857, residents of Gagol
+                        participated in resistance against British forces.
+                        Local historical accounts describe the village
+                        as one of the rebel settlements around Meerut.
                     </p>
-
-                    {% if place["location"] %}
-
-                    <span>
-                        Location: {{ place["location"] }}
-                    </span>
-
-                    {% endif %}
-
-
-                    {% if place["source"] %}
-
-                    <span class="source-text">
-                        Source: {{ place["source"] }}
-                    </span>
-
-                    {% endif %}
 
                 </div>
 
             </div>
 
-            {% endfor %}
+
+            <div class="timeline-item">
+
+                <div class="timeline-marker">
+                    1857
+                </div>
+
+                <div class="timeline-content">
+
+                    <h3>The Nine Martyrs</h3>
+
+                    <p>
+                        Nine local revolutionaries were captured and
+                        executed by the British during the period of the
+                        uprising. Their sacrifice became deeply connected
+                        with the village's collective memory.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <div class="timeline-marker">
+                    Today
+                </div>
+
+                <div class="timeline-content">
+
+                    <h3>A Living Memory</h3>
+
+                    <p>
+                        The memory of the nine martyrs continues to be
+                        preserved through memorials and annual remembrance
+                        traditions in the village.
+                    </p>
+
+                </div>
+
+            </div>
 
         </div>
 
-        {% else %}
+    </div>
 
-        <div class="empty-state">
+</section>
 
-            <h3>Heritage information will be added soon.</h3>
+
+<!-- MARTYRS -->
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">REMEMBERING 1857</p>
+
+            <h2>The Nine Martyrs of Gagol</h2>
 
             <p>
-                Real photographs and verified information
-                can be added through the admin panel.
+                Local historical accounts remember nine revolutionaries
+                associated with the village who were executed during the
+                1857 uprising.
             </p>
 
         </div>
 
-        {% endif %}
+
+        <div class="martyr-grid">
+
+            <div class="martyr-card">Ram Sahai</div>
+
+            <div class="martyr-card">Ghasita Singh</div>
+
+            <div class="martyr-card">Ramman Singh</div>
+
+            <div class="martyr-card">Harjas Singh</div>
+
+            <div class="martyr-card">Himmat Singh</div>
+
+            <div class="martyr-card">Kadhera Singh</div>
+
+            <div class="martyr-card">Sibba Singh</div>
+
+            <div class="martyr-card">Bairam</div>
+
+            <div class="martyr-card">Darba Singh</div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DUSSEHRA -->
+
+<section class="section section-alt">
+
+    <div class="container">
+
+        <div class="history-card">
+
+            <p class="eyebrow">A UNIQUE TRADITION</p>
+
+            <h2>Why Dussehra Is Different in Gagol</h2>
+
+            <p>
+                One of the most distinctive traditions associated with
+                Gagol is the way the village observes Dussehra.
+            </p>
+
+            <p>
+                According to local accounts, the village does not follow
+                the usual Dussehra celebration of burning Ravana's effigy.
+                Instead, villagers gather to remember the nine revolutionaries
+                whose lives were lost during the events of 1857.
+            </p>
+
+            <p>
+                Memorial shrines and remembrance rituals keep this history
+                connected with the present generation.
+            </p>
+
+            <div class="heritage-note">
+
+                <strong>Heritage is remembered, not forgotten.</strong>
+
+                <p>
+                    The tradition reflects how historical memory can become
+                    a living part of community identity.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- VILLAGE FACTS -->
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">VILLAGE PROFILE</p>
+
+            <h2>Gagol at a Glance</h2>
+
+        </div>
+
+
+        <div class="facts-grid">
+
+            <div class="fact-card">
+
+                <span>District</span>
+
+                <strong>Meerut</strong>
+
+            </div>
+
+
+            <div class="fact-card">
+
+                <span>Tehsil</span>
+
+                <strong>Meerut</strong>
+
+            </div>
+
+
+            <div class="fact-card">
+
+                <span>Development Block</span>
+
+                <strong>Meerut</strong>
+
+            </div>
+
+
+            <div class="fact-card">
+
+                <span>Gram Panchayat</span>
+
+                <strong>Gagaul</strong>
+
+            </div>
+
+
+            <div class="fact-card">
+
+                <span>Census 2011 Population</span>
+
+                <strong>7,673</strong>
+
+            </div>
+
+
+            <div class="fact-card">
+
+                <span>Area</span>
+
+                <strong>901.81 hectares</strong>
+
+            </div>
+
+
+            <div class="fact-card">
+
+                <span>Village Code</span>
+
+                <strong>119132</strong>
+
+            </div>
+
+
+            <div class="fact-card">
+
+                <span>PIN Code</span>
+
+                <strong>245206</strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CLOSING -->
+
+<section class="section section-alt">
+
+    <div class="container">
+
+        <div class="history-closing">
+
+            <p class="eyebrow">HERITAGE TODAY</p>
+
+            <h2>A Story That Continues</h2>
+
+            <p>
+                From ancient traditions to the memories of 1857,
+                Gagol's heritage is not limited to the past.
+                It continues through its places, traditions and
+                the stories passed from one generation to another.
+            </p>
+
+        </div>
 
     </div>
 

@@ -1,16 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %}Government Schemes - GramDarshan{% endblock %}
+{% block title %}
+Government Schemes - GramDarshan
+{% endblock %}
 
 {% block content %}
+
+<!-- ================= PAGE HERO ================= -->
 
 <section class="page-hero">
 
     <div class="container">
 
-        <p class="eyebrow">GOVERNMENT SCHEMES</p>
+        <p class="eyebrow">
+            GOVERNMENT SCHEMES
+        </p>
 
-        <h1>{{ village["village_name"] }}</h1>
+        <h1>
+            {{ village["village_name"] }}
+        </h1>
 
         <p>
             Explore government schemes and citizen services
@@ -22,15 +30,21 @@
 </section>
 
 
+<!-- ================= SCHEMES ================= -->
+
 <section class="section">
 
     <div class="container">
 
         <div class="section-heading">
 
-            <p class="eyebrow">AVAILABLE SCHEMES</p>
+            <p class="eyebrow">
+                AVAILABLE SCHEMES
+            </p>
 
-            <h2>Government Schemes</h2>
+            <h2>
+                Government Schemes
+            </h2>
 
             <p>
                 Information about schemes and services available
@@ -48,24 +62,93 @@
 
             <div class="module-card">
 
+                <!-- Scheme Name -->
+
                 <h3>
                     {{ scheme["scheme_name"] }}
                 </h3>
 
+
+                <!-- Purpose -->
+
+                {% if scheme["purpose"] %}
+
                 <p>
-                    <strong>Purpose:</strong><br>
+
+                    <strong>
+                        Purpose:
+                    </strong>
+
+                    <br>
+
                     {{ scheme["purpose"] }}
+
                 </p>
 
+                {% endif %}
+
+
+                <!-- Eligibility -->
+
+                {% if scheme["eligibility"] %}
+
                 <p>
-                    <strong>Eligibility:</strong><br>
+
+                    <strong>
+                        Eligibility:
+                    </strong>
+
+                    <br>
+
                     {{ scheme["eligibility"] }}
+
                 </p>
 
+                {% endif %}
+
+
+                <!-- Benefits -->
+
+                {% if scheme["benefits"] %}
+
                 <p>
-                    <strong>Benefits:</strong><br>
+
+                    <strong>
+                        Benefits:
+                    </strong>
+
+                    <br>
+
                     {{ scheme["benefits"] }}
+
                 </p>
+
+                {% endif %}
+
+
+                <!-- Official Source -->
+
+                {% if scheme["source"] %}
+
+                <p>
+
+                    <strong>
+                        Official Source:
+                    </strong>
+
+                    <br>
+
+                    <a
+                        href="{{ scheme['source'] }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        View Official Government Source
+                    </a>
+
+                </p>
+
+                {% endif %}
 
             </div>
 
@@ -73,11 +156,16 @@
 
         </div>
 
+
         {% else %}
+
+        <!-- ================= EMPTY STATE ================= -->
 
         <div class="empty-state">
 
-            <h3>No schemes available.</h3>
+            <h3>
+                No schemes available.
+            </h3>
 
             <p>
                 Government scheme information will appear here

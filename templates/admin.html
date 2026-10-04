@@ -1,562 +1,1265 @@
 {% extends "base.html" %}
 
-{% block title %}Admin Dashboard - GramDarshan{% endblock %}
+{% block title %}
+Admin Dashboard - GramDarshan
+{% endblock %}
 
 {% block content %}
 
 <section class="page-hero">
-
     <div class="container">
+        <p class="eyebrow">ADMIN PANEL</p>
 
-        <p class="eyebrow">ADMINISTRATION</p>
-
-        <h1>Admin Dashboard</h1>
+        <h1>GramDarshan Admin Dashboard</h1>
 
         <p>
-            Manage village information, content and citizen complaints.
+            Manage village information, notices, schemes,
+            development projects, history, heritage and complaints.
         </p>
-
     </div>
-
 </section>
 
 
-<section class="section">
+<!-- =====================================================
+     OVERVIEW
+===================================================== -->
 
+<section class="section">
     <div class="container">
 
         <div class="section-heading">
-
             <p class="eyebrow">OVERVIEW</p>
-
-            <h2>GramDarshan Administration</h2>
-
-        </div>
-
-
-        <div class="admin-grid">
-
-            <div class="info-card">
-
-                <h3>{{ villages|length }}</h3>
-
-                <p>Registered Villages</p>
-
-            </div>
-
-
-            <div class="info-card">
-
-                <h3>{{ complaints|length }}</h3>
-
-                <p>Total Complaints</p>
-
-            </div>
-
-
-            <div class="info-card">
-
-                <h3>Content</h3>
-
-                <p>Village Information Management</p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="section">
-
-    <div class="container">
-
-        <div class="section-heading">
-
-            <p class="eyebrow">CONTENT MANAGEMENT</p>
-
-            <h2>Manage Village Content</h2>
-
+            <h2>Dashboard Overview</h2>
             <p>
-                Add information that will be displayed to village residents.
+                Manage the information displayed across GramDarshan.
             </p>
-
         </div>
-
 
         <div class="module-grid">
 
             <div class="module-card">
-
-                <h3>Add Notice</h3>
-
+                <h3>Villages</h3>
                 <p>
-                    Publish important village announcements and notices.
+                    {{ villages|length }}
+                    registered villages
                 </p>
-
-                <a href="#add-notice" class="card-link">
-                    Add Notice
-                </a>
-
             </div>
 
-
             <div class="module-card">
-
-                <h3>Add Scheme</h3>
-
+                <h3>History</h3>
                 <p>
-                    Add information about government schemes and services.
+                    {{ history_items|length }}
+                    history records
                 </p>
-
-                <a href="#add-scheme" class="card-link">
-                    Add Scheme
-                </a>
-
             </div>
 
+            <div class="module-card">
+                <h3>Heritage</h3>
+                <p>
+                    {{ heritage_places|length }}
+                    heritage records
+                </p>
+            </div>
 
             <div class="module-card">
-
-                <h3>Add Development Project</h3>
-
+                <h3>Schemes</h3>
                 <p>
-                    Add village development projects and their current status.
+                    {{ schemes|length }}
+                    government schemes
                 </p>
+            </div>
 
-                <a href="#add-development" class="card-link">
-                    Add Project
-                </a>
+            <div class="module-card">
+                <h3>Notices</h3>
+                <p>
+                    {{ notices|length }}
+                    notices
+                </p>
+            </div>
 
+            <div class="module-card">
+                <h3>Development</h3>
+                <p>
+                    {{ projects|length }}
+                    development projects
+                </p>
+            </div>
+
+            <div class="module-card">
+                <h3>Complaints</h3>
+                <p>
+                    {{ complaints|length }}
+                    complaints
+                </p>
             </div>
 
         </div>
 
     </div>
-
 </section>
 
 
-<section class="section">
+<!-- =====================================================
+     VILLAGE INFORMATION
+===================================================== -->
+
+<section class="section admin-section">
 
     <div class="container">
 
         <div class="section-heading">
+            <p class="eyebrow">VILLAGE MANAGEMENT</p>
 
-            <p class="eyebrow">VILLAGES</p>
+            <h2>Village Information</h2>
 
-            <h2>Registered Villages</h2>
-
+            <p>
+                Update the information shown on the My Village page.
+            </p>
         </div>
 
 
-        <div class="admin-grid">
+        {% for village in villages %}
 
-            {% for village in villages %}
+        <div class="admin-card">
 
-            <div class="info-card">
+            <div class="section-heading">
+
+                <p class="eyebrow">
+                    VILLAGE {{ village["village_id"] }}
+                </p>
 
                 <h3>
                     {{ village["village_name"] }}
                 </h3>
 
-                <p>
-                    {{ village["location"] }}
-                </p>
-
-                <p>
-                    {{ village["facilities"] }}
-                </p>
-
             </div>
 
-            {% endfor %}
+
+            <form
+                method="POST"
+                action="{{ url_for(
+                    'update_village',
+                    village_id=village['village_id']
+                ) }}"
+            >
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>Village Name</label>
+
+                        <input
+                            type="text"
+                            name="village_name"
+                            value="{{ village['village_name'] or '' }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Location</label>
+
+                        <input
+                            type="text"
+                            name="location"
+                            value="{{ village['location'] or '' }}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Population</label>
+
+                        <input
+                            type="number"
+                            name="population"
+                            value="{{ village['population'] or 0 }}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Estimated Population</label>
+
+                        <input
+                            type="number"
+                            name="estimated_population"
+                            value="{{ village['estimated_population'] or 0 }}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>District</label>
+
+                        <input
+                            type="text"
+                            name="district"
+                            value="{{ village['district'] or '' }}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Tehsil</label>
+
+                        <input
+                            type="text"
+                            name="tehsil"
+                            value="{{ village['tehsil'] or '' }}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Block</label>
+
+                        <input
+                            type="text"
+                            name="block"
+                            value="{{ village['block'] or '' }}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Gram Panchayat</label>
+
+                        <input
+                            type="text"
+                            name="panchayat"
+                            value="{{ village['panchayat'] or '' }}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>PIN Code</label>
+
+                        <input
+                            type="text"
+                            name="pin_code"
+                            value="{{ village['pin_code'] or '' }}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Area (hectares)</label>
+
+                        <input
+                            type="number"
+                            step="0.01"
+                            name="area"
+                            value="{{ village['area'] or 0 }}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Households</label>
+
+                        <input
+                            type="number"
+                            name="households"
+                            value="{{ village['households'] or 0 }}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>Facilities</label>
+
+                        <textarea
+                            name="facilities"
+                            rows="3"
+                        >{{ village['facilities'] or '' }}</textarea>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>Description</label>
+
+                        <textarea
+                            name="description"
+                            rows="4"
+                        >{{ village['description'] or '' }}</textarea>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Save Village Information
+                </button>
+
+            </form>
 
         </div>
+
+        {% endfor %}
 
     </div>
 
 </section>
 
 
-<section class="section" id="add-notice">
+<!-- =====================================================
+     HISTORY
+===================================================== -->
+
+<section class="section admin-section">
 
     <div class="container">
 
         <div class="section-heading">
 
-            <p class="eyebrow">NOTICE MANAGEMENT</p>
+            <p class="eyebrow">HISTORY</p>
 
-            <h2>Add Village Notice</h2>
+            <h2>History Management</h2>
 
         </div>
 
 
-        <form method="POST"
-              action="{{ url_for('add_notice') }}"
-              class="auth-form admin-form">
+        <div class="admin-card">
 
-            <div class="form-group">
+            <h3>Add History</h3>
 
-                <label for="notice_village">
-                    Select Village
-                </label>
+            <form
+                method="POST"
+                action="{{ url_for('add_history') }}"
+            >
 
-                <select
-                    id="notice_village"
-                    name="village_id"
-                    required
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>Village</label>
+
+                        <select
+                            name="village_id"
+                            required
+                        >
+
+                            {% for village in villages %}
+
+                            <option
+                                value="{{ village['village_id'] }}"
+                            >
+                                {{ village['village_name'] }}
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Title</label>
+
+                        <input
+                            type="text"
+                            name="title"
+                            placeholder="History title"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>Content</label>
+
+                        <textarea
+                            name="content"
+                            rows="5"
+                            placeholder="History information"
+                            required
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn"
                 >
+                    Add History
+                </button>
 
-                    <option value="" disabled selected>
-                        Select village
-                    </option>
+            </form>
 
-                    {% for village in villages %}
-
-                    <option value="{{ village['village_id'] }}">
-                        {{ village['village_name'] }}
-                    </option>
-
-                    {% endfor %}
-
-                </select>
-
-            </div>
+        </div>
 
 
-            <div class="form-group">
+        {% if history_items %}
 
-                <label for="notice_title">
-                    Notice Title
-                </label>
+        <div class="admin-card">
 
-                <input
-                    type="text"
-                    id="notice_title"
-                    name="title"
-                    placeholder="Enter notice title"
-                    required
-                >
+            <h3>Existing History</h3>
 
-            </div>
+            <div class="admin-list">
 
+                {% for item in history_items %}
 
-            <div class="form-group">
+                <div class="admin-list-item">
 
-                <label for="notice_description">
-                    Description
-                </label>
+                    <div>
 
-                <textarea
-                    id="notice_description"
-                    name="description"
-                    placeholder="Enter notice details"
-                    rows="5"
-                    required
-                ></textarea>
+                        <strong>
+                            {{ item["title"] }}
+                        </strong>
 
-            </div>
+                        <p>
+                            {{ item["village_name"] }}
+                        </p>
+
+                        <p>
+                            {{ item["content"] }}
+                        </p>
+
+                    </div>
 
 
-            <div class="form-group">
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'delete_history',
+                            history_id=item['history_id']
+                        ) }}"
+                        onsubmit="return confirm(
+                            'Are you sure you want to delete this history record?'
+                        );"
+                    >
 
-                <label for="notice_date">
-                    Date
-                </label>
+                        <button
+                            type="submit"
+                            class="delete-btn"
+                        >
+                            Delete
+                        </button>
 
-                <input
-                    type="date"
-                    id="notice_date"
-                    name="date"
-                    required
-                >
+                    </form>
+
+                </div>
+
+                {% endfor %}
 
             </div>
 
+        </div>
 
-            <button type="submit" class="auth-btn">
-                Publish Notice
-            </button>
-
-        </form>
+        {% endif %}
 
     </div>
 
 </section>
 
 
-<section class="section" id="add-scheme">
+<!-- =====================================================
+     HERITAGE
+===================================================== -->
+
+<section class="section admin-section">
 
     <div class="container">
 
         <div class="section-heading">
 
-            <p class="eyebrow">SCHEME MANAGEMENT</p>
+            <p class="eyebrow">HERITAGE</p>
 
-            <h2>Add Government Scheme</h2>
+            <h2>Heritage Management</h2>
 
         </div>
 
 
-        <form method="POST"
-              action="{{ url_for('add_scheme') }}"
-              class="auth-form admin-form">
+        <div class="admin-card">
 
-            <div class="form-group">
+            <h3>Add Heritage Place</h3>
 
-                <label for="scheme_village">
-                    Select Village
-                </label>
+            <form
+                method="POST"
+                action="{{ url_for('add_heritage') }}"
+            >
 
-                <select
-                    id="scheme_village"
-                    name="village_id"
-                    required
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>Village</label>
+
+                        <select
+                            name="village_id"
+                            required
+                        >
+
+                            {% for village in villages %}
+
+                            <option
+                                value="{{ village['village_id'] }}"
+                            >
+                                {{ village['village_name'] }}
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Heritage Place Name</label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Heritage place"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>Description</label>
+
+                        <textarea
+                            name="description"
+                            rows="4"
+                            placeholder="Heritage description"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn"
                 >
+                    Add Heritage Place
+                </button>
 
-                    <option value="" disabled selected>
-                        Select village
-                    </option>
+            </form>
 
-                    {% for village in villages %}
-
-                    <option value="{{ village['village_id'] }}">
-                        {{ village['village_name'] }}
-                    </option>
-
-                    {% endfor %}
-
-                </select>
-
-            </div>
+        </div>
 
 
-            <div class="form-group">
+        {% if heritage_places %}
 
-                <label for="scheme_name">
-                    Scheme Name
-                </label>
+        <div class="admin-card">
 
-                <input
-                    type="text"
-                    id="scheme_name"
-                    name="scheme_name"
-                    placeholder="Enter scheme name"
-                    required
-                >
+            <h3>Existing Heritage Places</h3>
 
-            </div>
+            <div class="admin-list">
 
+                {% for heritage in heritage_places %}
 
-            <div class="form-group">
+                <div class="admin-list-item">
 
-                <label for="scheme_purpose">
-                    Purpose
-                </label>
+                    <div>
 
-                <textarea
-                    id="scheme_purpose"
-                    name="purpose"
-                    placeholder="Enter purpose"
-                    rows="4"
-                    required
-                ></textarea>
+                        <strong>
+                            {{ heritage["name"] }}
+                        </strong>
 
-            </div>
+                        <p>
+                            {{ heritage["village_name"] }}
+                        </p>
+
+                        <p>
+                            {{ heritage["description"] }}
+                        </p>
+
+                    </div>
 
 
-            <div class="form-group">
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'delete_heritage',
+                            heritage_id=heritage['heritage_id']
+                        ) }}"
+                        onsubmit="return confirm(
+                            'Are you sure you want to delete this heritage place?'
+                        );"
+                    >
 
-                <label for="scheme_eligibility">
-                    Eligibility
-                </label>
+                        <button
+                            type="submit"
+                            class="delete-btn"
+                        >
+                            Delete
+                        </button>
 
-                <textarea
-                    id="scheme_eligibility"
-                    name="eligibility"
-                    placeholder="Enter eligibility information"
-                    rows="4"
-                    required
-                ></textarea>
+                    </form>
+
+                </div>
+
+                {% endfor %}
 
             </div>
 
+        </div>
 
-            <div class="form-group">
-
-                <label for="scheme_benefits">
-                    Benefits
-                </label>
-
-                <textarea
-                    id="scheme_benefits"
-                    name="benefits"
-                    placeholder="Enter benefits"
-                    rows="4"
-                    required
-                ></textarea>
-
-            </div>
-
-
-            <button type="submit" class="auth-btn">
-                Add Scheme
-            </button>
-
-        </form>
+        {% endif %}
 
     </div>
 
 </section>
 
 
-<section class="section" id="add-development">
+<!-- =====================================================
+     GOVERNMENT SCHEMES
+===================================================== -->
+
+<section class="section admin-section">
 
     <div class="container">
 
         <div class="section-heading">
 
-            <p class="eyebrow">DEVELOPMENT MANAGEMENT</p>
+            <p class="eyebrow">GOVERNMENT SCHEMES</p>
 
-            <h2>Add Development Project</h2>
+            <h2>Scheme Management</h2>
 
         </div>
 
 
-        <form method="POST"
-              action="{{ url_for('add_development') }}"
-              class="auth-form admin-form">
+        <div class="admin-card">
 
-            <div class="form-group">
+            <h3>Add Government Scheme</h3>
 
-                <label for="development_village">
-                    Select Village
-                </label>
+            <form
+                method="POST"
+                action="{{ url_for('add_scheme') }}"
+            >
 
-                <select
-                    id="development_village"
-                    name="village_id"
-                    required
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>Village</label>
+
+                        <select
+                            name="village_id"
+                            required
+                        >
+
+                            {% for village in villages %}
+
+                            <option
+                                value="{{ village['village_id'] }}"
+                            >
+                                {{ village['village_name'] }}
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Scheme Name</label>
+
+                        <input
+                            type="text"
+                            name="scheme_name"
+                            placeholder="Government scheme name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>Purpose</label>
+
+                        <textarea
+                            name="purpose"
+                            rows="3"
+                            placeholder="Purpose of the scheme"
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>Eligibility</label>
+
+                        <textarea
+                            name="eligibility"
+                            rows="3"
+                            placeholder="Eligibility criteria"
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>Benefits</label>
+
+                        <textarea
+                            name="benefits"
+                            rows="3"
+                            placeholder="Benefits"
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>Official Source</label>
+
+                        <input
+                            type="url"
+                            name="source"
+                            placeholder="https://official-government-website.gov.in"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn"
                 >
+                    Add Government Scheme
+                </button>
 
-                    <option value="" disabled selected>
-                        Select village
-                    </option>
+            </form>
 
-                    {% for village in villages %}
-
-                    <option value="{{ village['village_id'] }}">
-                        {{ village['village_name'] }}
-                    </option>
-
-                    {% endfor %}
-
-                </select>
-
-            </div>
+        </div>
 
 
-            <div class="form-group">
+        {% if schemes %}
 
-                <label for="project_name">
-                    Project Name
-                </label>
+        <div class="admin-card">
 
-                <input
-                    type="text"
-                    id="project_name"
-                    name="project_name"
-                    placeholder="Enter project name"
-                    required
-                >
+            <h3>Existing Government Schemes</h3>
 
-            </div>
+            <div class="admin-list">
 
+                {% for scheme in schemes %}
 
-            <div class="form-group">
+                <div class="admin-list-item">
 
-                <label for="project_location">
-                    Location
-                </label>
+                    <div>
 
-                <input
-                    type="text"
-                    id="project_location"
-                    name="location"
-                    placeholder="Enter project location"
-                    required
-                >
+                        <strong>
+                            {{ scheme["scheme_name"] }}
+                        </strong>
 
-            </div>
+                        <p>
+                            {{ scheme["village_name"] }}
+                        </p>
 
+                        {% if scheme["purpose"] %}
 
-            <div class="form-group">
+                        <p>
+                            <strong>Purpose:</strong>
+                            {{ scheme["purpose"] }}
+                        </p>
 
-                <label for="project_description">
-                    Description
-                </label>
+                        {% endif %}
 
-                <textarea
-                    id="project_description"
-                    name="description"
-                    placeholder="Enter project description"
-                    rows="5"
-                    required
-                ></textarea>
+                        {% if scheme["source"] %}
 
-            </div>
+                        <p>
+                            <strong>Source:</strong>
+                            {{ scheme["source"] }}
+                        </p>
+
+                        {% endif %}
+
+                    </div>
 
 
-            <div class="form-group">
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'delete_scheme',
+                            scheme_id=scheme['scheme_id']
+                        ) }}"
+                        onsubmit="return confirm(
+                            'Are you sure you want to delete this scheme?'
+                        );"
+                    >
 
-                <label for="project_status">
-                    Status
-                </label>
+                        <button
+                            type="submit"
+                            class="delete-btn"
+                        >
+                            Delete
+                        </button>
 
-                <select
-                    id="project_status"
-                    name="status"
-                    required
-                >
+                    </form>
 
-                    <option value="Planned">
-                        Planned
-                    </option>
+                </div>
 
-                    <option value="In Progress">
-                        In Progress
-                    </option>
-
-                    <option value="Completed">
-                        Completed
-                    </option>
-
-                </select>
+                {% endfor %}
 
             </div>
 
+        </div>
 
-            <button type="submit" class="auth-btn">
-                Add Project
-            </button>
-
-        </form>
+        {% endif %}
 
     </div>
 
 </section>
 
 
-<section class="section complaint-history">
+<!-- =====================================================
+     NOTICES
+===================================================== -->
+
+<section class="section admin-section">
 
     <div class="container">
 
         <div class="section-heading">
 
-            <p class="eyebrow">COMPLAINT MANAGEMENT</p>
+            <p class="eyebrow">NOTICES</p>
+
+            <h2>Notice Management</h2>
+
+        </div>
+
+
+        <div class="admin-card">
+
+            <h3>Add Notice</h3>
+
+            <form
+                method="POST"
+                action="{{ url_for('add_notice') }}"
+            >
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>Village</label>
+
+                        <select
+                            name="village_id"
+                            required
+                        >
+
+                            {% for village in villages %}
+
+                            <option
+                                value="{{ village['village_id'] }}"
+                            >
+                                {{ village['village_name'] }}
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Notice Title</label>
+
+                        <input
+                            type="text"
+                            name="title"
+                            placeholder="Notice title"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Notice Date</label>
+
+                        <input
+                            type="date"
+                            name="notice_date"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>Notice Content</label>
+
+                        <textarea
+                            name="content"
+                            rows="5"
+                            placeholder="Notice details"
+                            required
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Add Notice
+                </button>
+
+            </form>
+
+        </div>
+
+
+        {% if notices %}
+
+        <div class="admin-card">
+
+            <h3>Existing Notices</h3>
+
+            <div class="admin-list">
+
+                {% for notice in notices %}
+
+                <div class="admin-list-item">
+
+                    <div>
+
+                        <strong>
+                            {{ notice["title"] }}
+                        </strong>
+
+                        <p>
+                            {{ notice["village_name"] }}
+                        </p>
+
+                        {% if notice["notice_date"] %}
+
+                        <p>
+                            <strong>Date:</strong>
+                            {{ notice["notice_date"] }}
+                        </p>
+
+                        {% endif %}
+
+                        <p>
+                            {{ notice["content"] }}
+                        </p>
+
+                    </div>
+
+
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'delete_notice',
+                            notice_id=notice['notice_id']
+                        ) }}"
+                        onsubmit="return confirm(
+                            'Are you sure you want to delete this notice?'
+                        );"
+                    >
+
+                        <button
+                            type="submit"
+                            class="delete-btn"
+                        >
+                            Delete
+                        </button>
+
+                    </form>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     DEVELOPMENT PROJECTS
+===================================================== -->
+
+<section class="section admin-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">DEVELOPMENT</p>
+
+            <h2>Development Project Management</h2>
+
+        </div>
+
+
+        <div class="admin-card">
+
+            <h3>Add Development Project</h3>
+
+            <form
+                method="POST"
+                action="{{ url_for('add_development') }}"
+            >
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>Village</label>
+
+                        <select
+                            name="village_id"
+                            required
+                        >
+
+                            {% for village in villages %}
+
+                            <option
+                                value="{{ village['village_id'] }}"
+                            >
+                                {{ village['village_name'] }}
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Project Title</label>
+
+                        <input
+                            type="text"
+                            name="title"
+                            placeholder="Project title"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Location</label>
+
+                        <input
+                            type="text"
+                            name="location"
+                            placeholder="Project location"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Status</label>
+
+                        <select name="status">
+
+                            <option value="Planned">
+                                Planned
+                            </option>
+
+                            <option value="In Progress">
+                                In Progress
+                            </option>
+
+                            <option value="Completed">
+                                Completed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>Description</label>
+
+                        <textarea
+                            name="description"
+                            rows="4"
+                            placeholder="Project description"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Add Development Project
+                </button>
+
+            </form>
+
+        </div>
+
+
+        {% if projects %}
+
+        <div class="admin-card">
+
+            <h3>Existing Development Projects</h3>
+
+            <div class="admin-list">
+
+                {% for project in projects %}
+
+                <div class="admin-list-item">
+
+                    <div>
+
+                        <strong>
+                            {{ project["title"] }}
+                        </strong>
+
+                        <p>
+                            {{ project["village_name"] }}
+                        </p>
+
+                        {% if project["location"] %}
+
+                        <p>
+                            <strong>Location:</strong>
+                            {{ project["location"] }}
+                        </p>
+
+                        {% endif %}
+
+                        <p>
+                            <strong>Status:</strong>
+                            {{ project["status"] }}
+                        </p>
+
+                        {% if project["description"] %}
+
+                        <p>
+                            {{ project["description"] }}
+                        </p>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'delete_development',
+                            project_id=project['project_id']
+                        ) }}"
+                        onsubmit="return confirm(
+                            'Are you sure you want to delete this development project?'
+                        );"
+                    >
+
+                        <button
+                            type="submit"
+                            class="delete-btn"
+                        >
+                            Delete
+                        </button>
+
+                    </form>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     COMPLAINTS
+===================================================== -->
+
+<section class="section admin-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">CITIZEN SERVICES</p>
 
             <h2>Citizen Complaints</h2>
 
@@ -565,76 +1268,133 @@
 
         {% if complaints %}
 
-        <div class="complaint-list">
+        <div class="admin-card">
 
-            {% for complaint in complaints %}
+            <div class="admin-list">
 
-            <div class="complaint-card">
+                {% for complaint in complaints %}
 
-                <div>
+                <div class="admin-list-item">
 
-                    <span class="complaint-id">
-                        Complaint #{{ complaint["complaint_id"] }}
-                    </span>
+                    <div>
 
-                    <h3>
-                        {{ complaint["category"] }}
-                    </h3>
+                        <strong>
+                            {{ complaint["category"] }}
+                        </strong>
 
-                    <p>
-                        {{ complaint["description"] }}
-                    </p>
+                        <p>
+                            <strong>Citizen:</strong>
+                            {{ complaint["name"] or "Unknown" }}
+                        </p>
 
-                    <span class="source-text">
-                        Reported by: {{ complaint["name"] }}
-                    </span>
+                        <p>
+                            <strong>Email:</strong>
+                            {{ complaint["email"] or "N/A" }}
+                        </p>
+
+                        <p>
+                            <strong>Village:</strong>
+                            {{ complaint["village_name"] or "N/A" }}
+                        </p>
+
+                        <p>
+                            {{ complaint["description"] }}
+                        </p>
+
+                        <p>
+                            <strong>Current Status:</strong>
+                            {{ complaint["status"] }}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'update_complaint',
+                                complaint_id=complaint['complaint_id']
+                            ) }}"
+                        >
+
+                            <div class="form-group">
+
+                                <label>Update Status</label>
+
+                                <select name="status">
+
+                                    <option
+                                        value="Submitted"
+                                        {% if complaint["status"] == "Submitted" %}
+                                        selected
+                                        {% endif %}
+                                    >
+                                        Submitted
+                                    </option>
+
+                                    <option
+                                        value="In Progress"
+                                        {% if complaint["status"] == "In Progress" %}
+                                        selected
+                                        {% endif %}
+                                    >
+                                        In Progress
+                                    </option>
+
+                                    <option
+                                        value="Resolved"
+                                        {% if complaint["status"] == "Resolved" %}
+                                        selected
+                                        {% endif %}
+                                    >
+                                        Resolved
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <button
+                                type="submit"
+                                class="primary-btn"
+                            >
+                                Update Status
+                            </button>
+
+                        </form>
+
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'delete_complaint',
+                                complaint_id=complaint['complaint_id']
+                            ) }}"
+                            onsubmit="return confirm(
+                                'Are you sure you want to delete this complaint?'
+                            );"
+                            style="margin-top: 10px;"
+                        >
+
+                            <button
+                                type="submit"
+                                class="delete-btn"
+                            >
+                                Delete Complaint
+                            </button>
+
+                        </form>
+
+                    </div>
 
                 </div>
 
-
-                <div class="complaint-status">
-
-                    <form
-                        method="POST"
-                        action="{{ url_for('update_complaint', complaint_id=complaint['complaint_id']) }}"
-                    >
-
-                        <select name="status">
-
-                            <option value="Submitted"
-                                {% if complaint["status"] == "Submitted" %}selected{% endif %}>
-                                Submitted
-                            </option>
-
-                            <option value="Assigned"
-                                {% if complaint["status"] == "Assigned" %}selected{% endif %}>
-                                Assigned
-                            </option>
-
-                            <option value="In Progress"
-                                {% if complaint["status"] == "In Progress" %}selected{% endif %}>
-                                In Progress
-                            </option>
-
-                            <option value="Resolved"
-                                {% if complaint["status"] == "Resolved" %}selected{% endif %}>
-                                Resolved
-                            </option>
-
-                        </select>
-
-
-                        <button type="submit" class="status-btn">
-                            Update Status
-                        </button>
-
-                    </form>
-
-                </div>
+                {% endfor %}
 
             </div>
-
-            {% endfor %}
 
         </div>
 
@@ -645,7 +1405,8 @@
             <h3>No complaints available.</h3>
 
             <p>
-                Citizen complaints will appear here after submission.
+                Citizen complaints will appear here
+                when submitted by users.
             </p>
 
         </div>
@@ -655,5 +1416,6 @@
     </div>
 
 </section>
+
 
 {% endblock %}

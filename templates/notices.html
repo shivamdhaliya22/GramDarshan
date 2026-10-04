@@ -1,70 +1,47 @@
 {% extends "base.html" %}
 
-{% block title %}Notices - GramDarshan{% endblock %}
+{% block title %}
+Notices - GramDarshan
+{% endblock %}
 
 {% block content %}
 
 <section class="page-hero">
-
     <div class="container">
-
-        <p class="eyebrow">VILLAGE UPDATES</p>
-
-        <h1>Village Notices</h1>
-
+        <p class="eyebrow">LATEST UPDATES</p>
+        <h1>Important Notices</h1>
         <p>
-            Stay updated with important announcements and
-            information related to your village.
+            Notices and announcements for your selected village.
         </p>
-
     </div>
-
 </section>
 
-
 <section class="section">
-
     <div class="container">
-
-        <div class="section-heading">
-
-            <p class="eyebrow">LATEST UPDATES</p>
-
-            <h2>Important Notices</h2>
-
-            <p>
-                Notices and announcements for your selected village.
-            </p>
-
-        </div>
-
 
         {% if notices %}
 
-        <div class="notice-list">
+        <div class="module-grid">
 
             {% for notice in notices %}
 
-            <div class="notice-card">
+            <div class="module-card">
 
-                <div class="notice-date">
+                <p class="eyebrow">
+                    {% if notice["notice_date"] %}
+                        {{ notice["notice_date"] }}
+                    {% else %}
+                        Date not available
+                    {% endif %}
+                </p>
 
-                    {{ notice["date"] if notice["date"] else "Date not available" }}
+                <h3>
+                    {{ notice["title"] }}
+                </h3>
 
-                </div>
-
-
-                <div class="notice-content">
-
-                    <h3>
-                        {{ notice["title"] }}
-                    </h3>
-
-                    <p>
-                        {{ notice["description"] }}
-                    </p>
-
-                </div>
+                <p>
+                    {{ notice["content"] }}
+                </p>
 
             </div>
 
@@ -75,19 +52,15 @@
         {% else %}
 
         <div class="empty-state">
-
             <h3>No notices available.</h3>
-
             <p>
-                Important village announcements will be displayed here.
+                New village notices and announcements will appear here.
             </p>
-
         </div>
 
         {% endif %}
 
     </div>
-
 </section>
 
 {% endblock %}

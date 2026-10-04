@@ -1001,3 +1001,151 @@ body {
 .status-btn:hover {
     background: #1b3d2d;
 }
+
+/* ============================= */
+/* Mobile Navigation */
+/* ============================= */
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    padding: 4px 8px;
+    line-height: 1;
+}
+
+
+/* ============================= */
+/* Mobile Responsive Design */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+    .nav-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 18px;
+    }
+
+    .logo {
+        font-size: 22px;
+    }
+
+    /* Show hamburger */
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    /* Hide navigation by default */
+    .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        margin-top: 12px;
+        padding-top: 10px;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    /* Show navigation when menu is opened */
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 11px 8px;
+        font-size: 14px;
+        text-align: center;
+        white-space: normal;
+    }
+
+    /* Stack logo + menu + navigation */
+    .nav-container {
+        flex-wrap: wrap;
+    }
+
+    .nav-links {
+        order: 3;
+    }
+
+    /* Page content */
+    .container {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .page-hero {
+        padding: 45px 0;
+    }
+
+    .page-hero h1 {
+        font-size: 30px;
+        line-height: 1.2;
+    }
+
+    .page-hero p {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .section {
+        padding: 40px 0;
+    }
+
+    .module-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer {
+        text-align: center;
+    }
+}
+
+
+/* ============================= */
+/* Small Mobile Screens */
+/* ============================= */
+
+@media (max-width: 480px) {
+
+    .nav-container {
+        padding: 13px 14px;
+    }
+
+    .logo {
+        font-size: 21px;
+    }
+
+    .mobile-menu-btn {
+        font-size: 26px;
+    }
+
+    .page-hero h1 {
+        font-size: 27px;
+    }
+
+    .container {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+}
+

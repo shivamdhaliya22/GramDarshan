@@ -1,6 +1,9 @@
+```html
 {% extends "base.html" %}
 
-{% block title %}Complaints - GramDarshan{% endblock %}
+{% block title %}
+Complaints - GramDarshan
+{% endblock %}
 
 {% block content %}
 
@@ -10,10 +13,13 @@
 
         <p class="eyebrow">CITIZEN SERVICES</p>
 
-        <h1>Report a Problem</h1>
+        <h1>
+            Report a Problem
+        </h1>
 
         <p>
-            Report local civic problems and track their status.
+            Report local problems and track the status
+            of your submitted complaints.
         </p>
 
     </div>
@@ -25,25 +31,30 @@
 
     <div class="container">
 
-        <div class="complaint-layout">
+        <div class="section-heading">
 
-            <div class="complaint-form-card">
+            <p class="eyebrow">SUBMIT COMPLAINT</p>
 
-                <div class="section-heading">
+            <h2>
+                Report a Village Problem
+            </h2>
 
-                    <p class="eyebrow">SUBMIT</p>
+            <p>
+                Submit a complaint about a local issue
+                that needs attention.
+            </p>
 
-                    <h2>Report a Local Problem</h2>
-
-                    <p>
-                        Provide details about the issue so it can
-                        be recorded and reviewed.
-                    </p>
-
-                </div>
+        </div>
 
 
-                <form method="POST" class="auth-form">
+        <div class="admin-card">
+
+            <form
+                method="POST"
+                action="{{ url_for('complaints') }}"
+            >
+
+                <div class="form-grid">
 
                     <div class="form-group">
 
@@ -57,28 +68,28 @@
                             required
                         >
 
-                            <option value="" disabled selected>
-                                Select problem category
+                            <option value="">
+                                Select Category
                             </option>
 
-                            <option value="Road and Street">
-                                Road and Street
+                            <option value="Drainage / Sanitation">
+                                Drainage / Sanitation
+                            </option>
+
+                            <option value="Road / Street">
+                                Road / Street
                             </option>
 
                             <option value="Water Supply">
                                 Water Supply
                             </option>
 
-                            <option value="Drainage and Sanitation">
-                                Drainage and Sanitation
+                            <option value="Electricity">
+                                Electricity
                             </option>
 
-                            <option value="Streetlight">
-                                Streetlight
-                            </option>
-
-                            <option value="Public Facility">
-                                Public Facility
+                            <option value="Street Light">
+                                Street Light
                             </option>
 
                             <option value="Other">
@@ -99,46 +110,24 @@
                         <textarea
                             id="description"
                             name="description"
-                            rows="6"
-                            placeholder="Describe the problem"
+                            rows="5"
+                            placeholder="Describe the problem..."
                             required
                         ></textarea>
 
                     </div>
 
-
-                    <button type="submit" class="auth-btn">
-                        Submit Complaint
-                    </button>
-
-                </form>
-
-            </div>
-
-
-            <div class="complaint-info-card">
-
-                <p class="eyebrow">PROCESS</p>
-
-                <h2>Complaint Status</h2>
-
-                <p>
-                    Submitted complaints are stored in the
-                    system and can be tracked through their
-                    current status.
-                </p>
-
-
-                <div class="status-flow">
-
-                    <span>Submitted</span>
-                    <span>Assigned</span>
-                    <span>In Progress</span>
-                    <span>Resolved</span>
-
                 </div>
 
-            </div>
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Submit Complaint
+                </button>
+
+            </form>
 
         </div>
 
@@ -147,49 +136,76 @@
 </section>
 
 
-<section class="section complaint-history">
+<section class="section">
 
     <div class="container">
 
         <div class="section-heading">
 
-            <p class="eyebrow">YOUR REPORTS</p>
+            <p class="eyebrow">MY COMPLAINTS</p>
 
-            <h2>Complaint History</h2>
+            <h2>
+                Complaint Status
+            </h2>
+
+            <p>
+                Track the complaints you have submitted.
+            </p>
 
         </div>
 
 
         {% if complaints %}
 
-        <div class="complaint-list">
+        <div class="module-grid">
 
             {% for complaint in complaints %}
 
-            <div class="complaint-card">
+            <div class="module-card">
 
-                <div>
+                <p class="eyebrow">
+                    {{ complaint["category"] }}
+                </p>
 
-                    <span class="complaint-id">
-                        Complaint #{{ complaint["complaint_id"] }}
-                    </span>
+                <h3>
+                    Complaint #{{ complaint["complaint_id"] }}
+                </h3>
 
-                    <h3>
-                        {{ complaint["category"] }}
-                    </h3>
+                <p>
+                    {{ complaint["description"] }}
+                </p>
 
-                    <p>
-                        {{ complaint["description"] }}
-                    </p>
+                <p>
+                    <strong>Status:</strong>
 
-                </div>
+                    {% if complaint["status"] == "Resolved" %}
 
+                        Resolved
 
-                <div class="complaint-status">
+                    {% elif complaint["status"] == "In Progress" %}
 
-                    {{ complaint["status"] }}
+                        In Progress
 
-                </div>
+                    {% elif complaint["status"] == "Submitted" %}
+
+                        Submitted
+
+                    {% else %}
+
+                        {{ complaint["status"] or "Pending" }}
+
+                    {% endif %}
+
+                </p>
+
+                {% if complaint["created_at"] %}
+
+                <p>
+                    <strong>Submitted:</strong>
+                    {{ complaint["created_at"] }}
+                </p>
+
+                {% endif %}
 
             </div>
 
@@ -201,10 +217,13 @@
 
         <div class="empty-state">
 
-            <h3>No complaints submitted yet.</h3>
+            <h3>
+                No complaints submitted yet.
+            </h3>
 
             <p>
-                Your submitted complaints will appear here.
+                Your submitted complaints will appear here
+                with their current status.
             </p>
 
         </div>
@@ -216,3 +235,4 @@
 </section>
 
 {% endblock %}
+```

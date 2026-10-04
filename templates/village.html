@@ -1,20 +1,25 @@
 {% extends "base.html" %}
 
-{% block title %}My Village - GramDarshan{% endblock %}
+{% block title %}
+{{ village["village_name"] }} - GramDarshan
+{% endblock %}
 
 {% block content %}
 
-<section class="village-hero">
+<section class="page-hero">
 
     <div class="container">
 
         <p class="eyebrow">MY VILLAGE</p>
 
-        <h1>{{ village["village_name"] }}</h1>
+        <h1>
+            {{ village["village_name"] }}
+        </h1>
 
         <p>
-            Explore important information about your village
-            through GramDarshan.
+            Explore village information, heritage,
+            government schemes, notices, complaints,
+            and development activities.
         </p>
 
     </div>
@@ -26,58 +31,16 @@
 
     <div class="container">
 
-        <div class="village-info-grid">
+        <div class="section-heading">
 
-            <div class="info-card">
+            <p class="eyebrow">VILLAGE OVERVIEW</p>
 
-                <h3>Location</h3>
-
-                <p>
-                    {{ village["location"] }}
-                </p>
-
-            </div>
-
-
-            <div class="info-card">
-
-                <h3>Population</h3>
-
-                <p>
-                    {% if village["population"] %}
-                        {{ village["population"] }}
-                    {% else %}
-                        Information not available
-                    {% endif %}
-                </p>
-
-            </div>
-
-
-            <div class="info-card">
-
-                <h3>Facilities</h3>
-
-                <p>
-                    {{ village["facilities"] }}
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="village-section-content">
-
-            <p class="eyebrow">VILLAGE INFORMATION</p>
-
-            <h2>Explore Your Village</h2>
+            <h2>
+                About {{ village["village_name"] }}
+            </h2>
 
             <p>
-                GramDarshan brings important information about
-                your village together in one place. Explore its
-                history, government schemes, notices, development
-                activities and citizen services.
+                Basic information about the selected village.
             </p>
 
         </div>
@@ -86,16 +49,141 @@
         <div class="module-grid">
 
             <div class="module-card">
+                <h3>Population</h3>
+                <p>
+                    {{ village["population"] or "Information not available" }}
+                </p>
+            </div>
 
-                <h3>History & Heritage</h3>
+
+            <div class="module-card">
+                <h3>Area</h3>
+                <p>
+                    {{ village["area"] or "Information not available" }}
+                </p>
+            </div>
+
+
+            <div class="module-card">
+                <h3>Households</h3>
+                <p>
+                    {{ village["households"] or "Information not available" }}
+                </p>
+            </div>
+
+
+            <div class="module-card">
+                <h3>Estimated Population</h3>
+                <p>
+                    {{ village["estimated_population"] or "Information not available" }}
+                </p>
+            </div>
+
+
+            <div class="module-card">
+                <h3>District</h3>
+                <p>
+                    {{ village["district"] or "Information not available" }}
+                </p>
+            </div>
+
+
+            <div class="module-card">
+                <h3>Tehsil</h3>
+                <p>
+                    {{ village["tehsil"] or "Information not available" }}
+                </p>
+            </div>
+
+
+            <div class="module-card">
+                <h3>Block</h3>
+                <p>
+                    {{ village["block"] or "Information not available" }}
+                </p>
+            </div>
+
+
+            <div class="module-card">
+                <h3>Gram Panchayat</h3>
+                <p>
+                    {{ village["panchayat"] or "Information not available" }}
+                </p>
+            </div>
+
+
+            <div class="module-card">
+                <h3>PIN Code</h3>
+                <p>
+                    {{ village["pin_code"] or "Information not available" }}
+                </p>
+            </div>
+
+        </div>
+
+
+        {% if village["description"] %}
+
+        <div class="section-heading" style="margin-top: 50px;">
+
+            <p class="eyebrow">VILLAGE DESCRIPTION</p>
+
+            <h2>
+                About the Village
+            </h2>
+
+            <p>
+                {{ village["description"] }}
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">VILLAGE SERVICES</p>
+
+            <h2>
+                Explore GramDarshan
+            </h2>
+
+            <p>
+                Access important information and citizen services
+                related to your village.
+            </p>
+
+        </div>
+
+
+        <div class="module-grid">
+
+
+            <div class="module-card">
+
+                <h3>
+                    History & Heritage
+                </h3>
 
                 <p>
-                    Explore the historical and cultural identity
-                    of the village.
+                    Explore the history, heritage, traditions,
+                    and important historical places of the village.
                 </p>
 
-                <a href="#" class="card-link">
-                    Explore
+                <a
+                    href="{{ url_for('history') }}"
+                    class="card-link"
+                >
+                    Explore History →
                 </a>
 
             </div>
@@ -103,15 +191,20 @@
 
             <div class="module-card">
 
-                <h3>Government Schemes</h3>
+                <h3>
+                    Government Schemes
+                </h3>
 
                 <p>
-                    Find information about government schemes
-                    and citizen services.
+                    Explore government schemes and services
+                    relevant to village residents.
                 </p>
 
-                <a href="#" class="card-link">
-                    View Schemes
+                <a
+                    href="{{ url_for('schemes') }}"
+                    class="card-link"
+                >
+                    View Schemes →
                 </a>
 
             </div>
@@ -119,15 +212,20 @@
 
             <div class="module-card">
 
-                <h3>Village Notices</h3>
+                <h3>
+                    Village Notices
+                </h3>
 
                 <p>
-                    View important announcements and village
-                    updates.
+                    Stay updated with important village notices,
+                    announcements, and information.
                 </p>
 
-                <a href="#" class="card-link">
-                    View Notices
+                <a
+                    href="{{ url_for('notices') }}"
+                    class="card-link"
+                >
+                    View Notices →
                 </a>
 
             </div>
@@ -135,15 +233,20 @@
 
             <div class="module-card">
 
-                <h3>Development</h3>
+                <h3>
+                    Village Development
+                </h3>
 
                 <p>
-                    Explore development activities and projects
-                    in the village.
+                    View ongoing and completed development
+                    activities in the village.
                 </p>
 
-                <a href="#" class="card-link">
-                    View Development
+                <a
+                    href="{{ url_for('development') }}"
+                    class="card-link"
+                >
+                    View Development →
                 </a>
 
             </div>
@@ -151,34 +254,24 @@
 
             <div class="module-card">
 
-                <h3>Report a Problem</h3>
+                <h3>
+                    Report a Problem
+                </h3>
 
                 <p>
-                    Report local civic problems and track
-                    their status.
+                    Report local problems and track the status
+                    of submitted complaints.
                 </p>
 
-                <a href="#" class="card-link">
-                    Report Problem
+                <a
+                    href="{{ url_for('complaints') }}"
+                    class="card-link"
+                >
+                    Report a Problem →
                 </a>
 
             </div>
 
-
-            <div class="module-card">
-
-                <h3>Civic Information</h3>
-
-                <p>
-                    Access basic information related to local
-                    governance and civic services.
-                </p>
-
-                <a href="#" class="card-link">
-                    View Information
-                </a>
-
-            </div>
 
         </div>
 
