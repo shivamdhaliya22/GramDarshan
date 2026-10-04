@@ -1,0 +1,659 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - GramDarshan{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+
+    <div class="container">
+
+        <p class="eyebrow">ADMINISTRATION</p>
+
+        <h1>Admin Dashboard</h1>
+
+        <p>
+            Manage village information, content and citizen complaints.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">OVERVIEW</p>
+
+            <h2>GramDarshan Administration</h2>
+
+        </div>
+
+
+        <div class="admin-grid">
+
+            <div class="info-card">
+
+                <h3>{{ villages|length }}</h3>
+
+                <p>Registered Villages</p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <h3>{{ complaints|length }}</h3>
+
+                <p>Total Complaints</p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <h3>Content</h3>
+
+                <p>Village Information Management</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">CONTENT MANAGEMENT</p>
+
+            <h2>Manage Village Content</h2>
+
+            <p>
+                Add information that will be displayed to village residents.
+            </p>
+
+        </div>
+
+
+        <div class="module-grid">
+
+            <div class="module-card">
+
+                <h3>Add Notice</h3>
+
+                <p>
+                    Publish important village announcements and notices.
+                </p>
+
+                <a href="#add-notice" class="card-link">
+                    Add Notice
+                </a>
+
+            </div>
+
+
+            <div class="module-card">
+
+                <h3>Add Scheme</h3>
+
+                <p>
+                    Add information about government schemes and services.
+                </p>
+
+                <a href="#add-scheme" class="card-link">
+                    Add Scheme
+                </a>
+
+            </div>
+
+
+            <div class="module-card">
+
+                <h3>Add Development Project</h3>
+
+                <p>
+                    Add village development projects and their current status.
+                </p>
+
+                <a href="#add-development" class="card-link">
+                    Add Project
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">VILLAGES</p>
+
+            <h2>Registered Villages</h2>
+
+        </div>
+
+
+        <div class="admin-grid">
+
+            {% for village in villages %}
+
+            <div class="info-card">
+
+                <h3>
+                    {{ village["village_name"] }}
+                </h3>
+
+                <p>
+                    {{ village["location"] }}
+                </p>
+
+                <p>
+                    {{ village["facilities"] }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section" id="add-notice">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">NOTICE MANAGEMENT</p>
+
+            <h2>Add Village Notice</h2>
+
+        </div>
+
+
+        <form method="POST"
+              action="{{ url_for('add_notice') }}"
+              class="auth-form admin-form">
+
+            <div class="form-group">
+
+                <label for="notice_village">
+                    Select Village
+                </label>
+
+                <select
+                    id="notice_village"
+                    name="village_id"
+                    required
+                >
+
+                    <option value="" disabled selected>
+                        Select village
+                    </option>
+
+                    {% for village in villages %}
+
+                    <option value="{{ village['village_id'] }}">
+                        {{ village['village_name'] }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="notice_title">
+                    Notice Title
+                </label>
+
+                <input
+                    type="text"
+                    id="notice_title"
+                    name="title"
+                    placeholder="Enter notice title"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="notice_description">
+                    Description
+                </label>
+
+                <textarea
+                    id="notice_description"
+                    name="description"
+                    placeholder="Enter notice details"
+                    rows="5"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="notice_date">
+                    Date
+                </label>
+
+                <input
+                    type="date"
+                    id="notice_date"
+                    name="date"
+                    required
+                >
+
+            </div>
+
+
+            <button type="submit" class="auth-btn">
+                Publish Notice
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<section class="section" id="add-scheme">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">SCHEME MANAGEMENT</p>
+
+            <h2>Add Government Scheme</h2>
+
+        </div>
+
+
+        <form method="POST"
+              action="{{ url_for('add_scheme') }}"
+              class="auth-form admin-form">
+
+            <div class="form-group">
+
+                <label for="scheme_village">
+                    Select Village
+                </label>
+
+                <select
+                    id="scheme_village"
+                    name="village_id"
+                    required
+                >
+
+                    <option value="" disabled selected>
+                        Select village
+                    </option>
+
+                    {% for village in villages %}
+
+                    <option value="{{ village['village_id'] }}">
+                        {{ village['village_name'] }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="scheme_name">
+                    Scheme Name
+                </label>
+
+                <input
+                    type="text"
+                    id="scheme_name"
+                    name="scheme_name"
+                    placeholder="Enter scheme name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="scheme_purpose">
+                    Purpose
+                </label>
+
+                <textarea
+                    id="scheme_purpose"
+                    name="purpose"
+                    placeholder="Enter purpose"
+                    rows="4"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="scheme_eligibility">
+                    Eligibility
+                </label>
+
+                <textarea
+                    id="scheme_eligibility"
+                    name="eligibility"
+                    placeholder="Enter eligibility information"
+                    rows="4"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="scheme_benefits">
+                    Benefits
+                </label>
+
+                <textarea
+                    id="scheme_benefits"
+                    name="benefits"
+                    placeholder="Enter benefits"
+                    rows="4"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <button type="submit" class="auth-btn">
+                Add Scheme
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<section class="section" id="add-development">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">DEVELOPMENT MANAGEMENT</p>
+
+            <h2>Add Development Project</h2>
+
+        </div>
+
+
+        <form method="POST"
+              action="{{ url_for('add_development') }}"
+              class="auth-form admin-form">
+
+            <div class="form-group">
+
+                <label for="development_village">
+                    Select Village
+                </label>
+
+                <select
+                    id="development_village"
+                    name="village_id"
+                    required
+                >
+
+                    <option value="" disabled selected>
+                        Select village
+                    </option>
+
+                    {% for village in villages %}
+
+                    <option value="{{ village['village_id'] }}">
+                        {{ village['village_name'] }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="project_name">
+                    Project Name
+                </label>
+
+                <input
+                    type="text"
+                    id="project_name"
+                    name="project_name"
+                    placeholder="Enter project name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="project_location">
+                    Location
+                </label>
+
+                <input
+                    type="text"
+                    id="project_location"
+                    name="location"
+                    placeholder="Enter project location"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="project_description">
+                    Description
+                </label>
+
+                <textarea
+                    id="project_description"
+                    name="description"
+                    placeholder="Enter project description"
+                    rows="5"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="project_status">
+                    Status
+                </label>
+
+                <select
+                    id="project_status"
+                    name="status"
+                    required
+                >
+
+                    <option value="Planned">
+                        Planned
+                    </option>
+
+                    <option value="In Progress">
+                        In Progress
+                    </option>
+
+                    <option value="Completed">
+                        Completed
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button type="submit" class="auth-btn">
+                Add Project
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<section class="section complaint-history">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">COMPLAINT MANAGEMENT</p>
+
+            <h2>Citizen Complaints</h2>
+
+        </div>
+
+
+        {% if complaints %}
+
+        <div class="complaint-list">
+
+            {% for complaint in complaints %}
+
+            <div class="complaint-card">
+
+                <div>
+
+                    <span class="complaint-id">
+                        Complaint #{{ complaint["complaint_id"] }}
+                    </span>
+
+                    <h3>
+                        {{ complaint["category"] }}
+                    </h3>
+
+                    <p>
+                        {{ complaint["description"] }}
+                    </p>
+
+                    <span class="source-text">
+                        Reported by: {{ complaint["name"] }}
+                    </span>
+
+                </div>
+
+
+                <div class="complaint-status">
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('update_complaint', complaint_id=complaint['complaint_id']) }}"
+                    >
+
+                        <select name="status">
+
+                            <option value="Submitted"
+                                {% if complaint["status"] == "Submitted" %}selected{% endif %}>
+                                Submitted
+                            </option>
+
+                            <option value="Assigned"
+                                {% if complaint["status"] == "Assigned" %}selected{% endif %}>
+                                Assigned
+                            </option>
+
+                            <option value="In Progress"
+                                {% if complaint["status"] == "In Progress" %}selected{% endif %}>
+                                In Progress
+                            </option>
+
+                            <option value="Resolved"
+                                {% if complaint["status"] == "Resolved" %}selected{% endif %}>
+                                Resolved
+                            </option>
+
+                        </select>
+
+
+                        <button type="submit" class="status-btn">
+                            Update Status
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <h3>No complaints available.</h3>
+
+            <p>
+                Citizen complaints will appear here after submission.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Government Schemes - GramDarshan{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+
+    <div class="container">
+
+        <p class="eyebrow">GOVERNMENT SCHEMES</p>
+
+        <h1>{{ village["village_name"] }}</h1>
+
+        <p>
+            Explore government schemes and citizen services
+            relevant to your village.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">AVAILABLE SCHEMES</p>
+
+            <h2>Government Schemes</h2>
+
+            <p>
+                Information about schemes and services available
+                for village residents.
+            </p>
+
+        </div>
+
+
+        {% if schemes %}
+
+        <div class="module-grid">
+
+            {% for scheme in schemes %}
+
+            <div class="module-card">
+
+                <h3>
+                    {{ scheme["scheme_name"] }}
+                </h3>
+
+                <p>
+                    <strong>Purpose:</strong><br>
+                    {{ scheme["purpose"] }}
+                </p>
+
+                <p>
+                    <strong>Eligibility:</strong><br>
+                    {{ scheme["eligibility"] }}
+                </p>
+
+                <p>
+                    <strong>Benefits:</strong><br>
+                    {{ scheme["benefits"] }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <h3>No schemes available.</h3>
+
+            <p>
+                Government scheme information will appear here
+                when added by the administrator.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

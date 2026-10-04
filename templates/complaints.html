@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+
+{% block title %}Complaints - GramDarshan{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+
+    <div class="container">
+
+        <p class="eyebrow">CITIZEN SERVICES</p>
+
+        <h1>Report a Problem</h1>
+
+        <p>
+            Report local civic problems and track their status.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="complaint-layout">
+
+            <div class="complaint-form-card">
+
+                <div class="section-heading">
+
+                    <p class="eyebrow">SUBMIT</p>
+
+                    <h2>Report a Local Problem</h2>
+
+                    <p>
+                        Provide details about the issue so it can
+                        be recorded and reviewed.
+                    </p>
+
+                </div>
+
+
+                <form method="POST" class="auth-form">
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Problem Category
+                        </label>
+
+                        <select
+                            id="category"
+                            name="category"
+                            required
+                        >
+
+                            <option value="" disabled selected>
+                                Select problem category
+                            </option>
+
+                            <option value="Road and Street">
+                                Road and Street
+                            </option>
+
+                            <option value="Water Supply">
+                                Water Supply
+                            </option>
+
+                            <option value="Drainage and Sanitation">
+                                Drainage and Sanitation
+                            </option>
+
+                            <option value="Streetlight">
+                                Streetlight
+                            </option>
+
+                            <option value="Public Facility">
+                                Public Facility
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="description">
+                            Problem Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            rows="6"
+                            placeholder="Describe the problem"
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <button type="submit" class="auth-btn">
+                        Submit Complaint
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <div class="complaint-info-card">
+
+                <p class="eyebrow">PROCESS</p>
+
+                <h2>Complaint Status</h2>
+
+                <p>
+                    Submitted complaints are stored in the
+                    system and can be tracked through their
+                    current status.
+                </p>
+
+
+                <div class="status-flow">
+
+                    <span>Submitted</span>
+                    <span>Assigned</span>
+                    <span>In Progress</span>
+                    <span>Resolved</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section complaint-history">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">YOUR REPORTS</p>
+
+            <h2>Complaint History</h2>
+
+        </div>
+
+
+        {% if complaints %}
+
+        <div class="complaint-list">
+
+            {% for complaint in complaints %}
+
+            <div class="complaint-card">
+
+                <div>
+
+                    <span class="complaint-id">
+                        Complaint #{{ complaint["complaint_id"] }}
+                    </span>
+
+                    <h3>
+                        {{ complaint["category"] }}
+                    </h3>
+
+                    <p>
+                        {{ complaint["description"] }}
+                    </p>
+
+                </div>
+
+
+                <div class="complaint-status">
+
+                    {{ complaint["status"] }}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <h3>No complaints submitted yet.</h3>
+
+            <p>
+                Your submitted complaints will appear here.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

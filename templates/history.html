@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}History & Heritage - GramDarshan{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+
+    <div class="container">
+
+        <p class="eyebrow">HISTORY & HERITAGE</p>
+
+        <h1>Our Village Story</h1>
+
+        <p>
+            Explore the history, heritage and cultural identity
+            of your village.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">HISTORY</p>
+
+            <h2>Village History</h2>
+
+            <p>
+                Important historical information and records
+                related to the village.
+            </p>
+
+        </div>
+
+
+        {% if history_records %}
+
+        <div class="history-list">
+
+            {% for record in history_records %}
+
+            <div class="content-card">
+
+                <h3>{{ record["title"] }}</h3>
+
+                <p>
+                    {{ record["description"] }}
+                </p>
+
+                {% if record["source"] %}
+
+                <span class="source-text">
+                    Source: {{ record["source"] }}
+                </span>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <h3>History information will be added soon.</h3>
+
+            <p>
+                Verified historical information about the village
+                will be displayed here.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<section class="section heritage-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">HERITAGE</p>
+
+            <h2>Heritage Places</h2>
+
+            <p>
+                Discover important places and cultural landmarks
+                connected with the village.
+            </p>
+
+        </div>
+
+
+        {% if heritage_places %}
+
+        <div class="heritage-grid">
+
+            {% for place in heritage_places %}
+
+            <div class="heritage-card">
+
+                {% if place["photo"] %}
+
+                <img
+                    src="{{ url_for('static', filename=place['photo']) }}"
+                    alt="{{ place['title'] }}"
+                >
+
+                {% endif %}
+
+
+                <div class="heritage-card-content">
+
+                    <h3>{{ place["title"] }}</h3>
+
+                    <p>
+                        {{ place["description"] }}
+                    </p>
+
+                    {% if place["location"] %}
+
+                    <span>
+                        Location: {{ place["location"] }}
+                    </span>
+
+                    {% endif %}
+
+
+                    {% if place["source"] %}
+
+                    <span class="source-text">
+                        Source: {{ place["source"] }}
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <h3>Heritage information will be added soon.</h3>
+
+            <p>
+                Real photographs and verified information
+                can be added through the admin panel.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

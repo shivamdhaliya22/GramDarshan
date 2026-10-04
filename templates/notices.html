@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Notices - GramDarshan{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+
+    <div class="container">
+
+        <p class="eyebrow">VILLAGE UPDATES</p>
+
+        <h1>Village Notices</h1>
+
+        <p>
+            Stay updated with important announcements and
+            information related to your village.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">LATEST UPDATES</p>
+
+            <h2>Important Notices</h2>
+
+            <p>
+                Notices and announcements for your selected village.
+            </p>
+
+        </div>
+
+
+        {% if notices %}
+
+        <div class="notice-list">
+
+            {% for notice in notices %}
+
+            <div class="notice-card">
+
+                <div class="notice-date">
+
+                    {{ notice["date"] if notice["date"] else "Date not available" }}
+
+                </div>
+
+
+                <div class="notice-content">
+
+                    <h3>
+                        {{ notice["title"] }}
+                    </h3>
+
+                    <p>
+                        {{ notice["description"] }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <h3>No notices available.</h3>
+
+            <p>
+                Important village announcements will be displayed here.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

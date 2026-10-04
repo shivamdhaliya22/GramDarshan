@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}Home - GramDarshan{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="container hero-content">
+
+        <p class="eyebrow">DIGITAL VILLAGE PLATFORM</p>
+
+        <h1>
+            Know Your Village.<br>
+            Understand Its Present.<br>
+            Connect With Its Future.
+        </h1>
+
+        <p class="hero-description">
+            Explore village history, government schemes, development,
+            notices and citizen services in one place.
+        </p>
+
+        <a href="#villages" class="primary-btn">
+            Explore Villages
+        </a>
+
+    </div>
+</section>
+
+
+<section class="section" id="villages">
+
+    <div class="container">
+
+        <div class="section-heading">
+            <p class="eyebrow">EXPLORE</p>
+            <h2>Select Your Village</h2>
+            <p>Choose a village to explore its information and services.</p>
+        </div>
+
+
+        <div class="village-grid">
+
+            {% for village in villages %}
+
+            <div class="village-card">
+
+                <h3>{{ village["village_name"] }}</h3>
+
+                <p>{{ village["location"] }}</p>
+
+                <a href="#" class="card-link">
+                    View Village
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section modules-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+            <p class="eyebrow">GRAMDARSHAN</p>
+            <h2>Everything About Your Village</h2>
+            <p>
+                Important information and citizen services,
+                organized in one platform.
+            </p>
+        </div>
+
+
+        <div class="module-grid">
+
+            <div class="module-card">
+                <h3>History & Heritage</h3>
+                <p>
+                    Explore the history, heritage and cultural identity
+                    of the village.
+                </p>
+            </div>
+
+            <div class="module-card">
+                <h3>Government Schemes</h3>
+                <p>
+                    Find simple information about government schemes
+                    and citizen services.
+                </p>
+            </div>
+
+            <div class="module-card">
+                <h3>Notices</h3>
+                <p>
+                    Stay updated with important village announcements
+                    and notices.
+                </p>
+            </div>
+
+            <div class="module-card">
+                <h3>Report a Problem</h3>
+                <p>
+                    Report local civic problems and track their status.
+                </p>
+            </div>
+
+            <div class="module-card">
+                <h3>Village Development</h3>
+                <p>
+                    Explore development activities and projects
+                    in the village.
+                </p>
+            </div>
+
+            <div class="module-card">
+                <h3>My Village</h3>
+                <p>
+                    View important information and facilities
+                    of your village.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

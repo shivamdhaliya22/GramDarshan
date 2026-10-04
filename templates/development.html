@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Village Development - GramDarshan{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+
+    <div class="container">
+
+        <p class="eyebrow">VILLAGE DEVELOPMENT</p>
+
+        <h1>{{ village["village_name"] }}</h1>
+
+        <p>
+            Explore development activities and projects
+            related to your village.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">DEVELOPMENT PROJECTS</p>
+
+            <h2>Village Development</h2>
+
+            <p>
+                View ongoing, planned and completed development
+                projects in the village.
+            </p>
+
+        </div>
+
+
+        {% if projects %}
+
+        <div class="module-grid">
+
+            {% for project in projects %}
+
+            <div class="module-card">
+
+                <h3>
+                    {{ project["project_name"] }}
+                </h3>
+
+                <p>
+                    <strong>Location:</strong><br>
+                    {{ project["location"] }}
+                </p>
+
+                <p>
+                    <strong>Description:</strong><br>
+                    {{ project["description"] }}
+                </p>
+
+                <p>
+                    <strong>Status:</strong><br>
+                    {{ project["status"] }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <h3>No development projects available.</h3>
+
+            <p>
+                Development project information will appear here
+                when added by the administrator.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}
