@@ -839,11 +839,18 @@ def logout():
 
 
 # ==============================
+# Initialize Database
+# ==============================
+
+# This runs when Flask starts locally
+# and also when Gunicorn starts the app on Render.
+init_database()
+
+
+# ==============================
 # Run Application
 # ==============================
 
 if __name__ == "__main__":
-
-    init_database()
 
     app.run(debug=True)
